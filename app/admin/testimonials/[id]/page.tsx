@@ -1,7 +1,14 @@
-import { createClient } from "@/lib/supabase/server"; import { notFound } from "next/navigation"; import TestimonialForm from "../TestimonialForm"
+import { getDB } from "@/lib/db"
+import { notFound } from "next/navigation"
+import TestimonialForm from "../TestimonialForm"
+
 export default async function EditTestimonialPage({ params }: { params: { id: string } }) {
     let item = null
-    try { const s = createClient(); const { data } = await s.from("testimonials").select("*").eq("id", params.id).single(); item = data } catch { }
+    try {
+        const db = await getDB()
+        item = db.testimonials?.find(t => t.id === params.id) || null
+    } catch { }
+    
     if (!item) notFound()
-    return <TestimonialForm item={item} />
+    return <TestimonialForm item={item as any} />
 }

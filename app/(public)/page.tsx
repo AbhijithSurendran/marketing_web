@@ -5,11 +5,23 @@ import AboutSection from "@/components/public/AboutSection"
 import ServicesSection from "@/components/public/ServicesSection"
 import ProductsSection from "@/components/public/ProductsSection"
 import GallerySection from "@/components/public/GallerySection"
+import TestimonialsSection from "@/components/public/TestimonialsSection"
 import { getDB } from "@/lib/db"
 
-export const metadata: Metadata = {
-    title: "WebMarket — Quality Products & Services",
-    description: "Discover our wide range of quality products and professional services.",
+export async function generateMetadata(): Promise<Metadata> {
+    try {
+        const db = await getDB();
+        const seo = db.pages.home;
+        return {
+            title: seo?.metaTitle || "WebMarket — Quality Products & Services",
+            description: seo?.metaDescription || "Discover our wide range of quality products and professional services.",
+        }
+    } catch {
+        return {
+            title: "WebMarket — Quality Products & Services",
+            description: "Discover our wide range of quality products and professional services.",
+        }
+    }
 }
 
 export default async function HomePage() {
@@ -19,6 +31,7 @@ export default async function HomePage() {
     const services = db.services.slice(0, 6);
     const products = db.products.slice(0, 6);
     const galleryItems = db.gallery.slice(0, 6);
+    const testimonials = (db.testimonials?.filter(t => t.is_active) || []).sort((a, b) => a.sort_order - b.sort_order);
 
     return (
         <>
@@ -41,6 +54,7 @@ export default async function HomePage() {
             {services.length > 0 && <ServicesSection services={services} />}
             {products.length > 0 && <ProductsSection products={products} />}
             {galleryItems.length > 0 && <GallerySection items={galleryItems} />}
+            {testimonials.length > 0 && <TestimonialsSection testimonials={testimonials} />}
 
             {/* CTA Banner */}
             <section className="py-20 bg-primary-600">

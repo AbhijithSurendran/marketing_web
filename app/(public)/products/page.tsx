@@ -6,9 +6,20 @@ import PageContainer from "@/components/ui/PageContainer"
 import { getDB } from "@/lib/db"
 import { truncate } from "@/lib/utils"
 
-export const metadata: Metadata = {
-    title: "Our Products",
-    description: "Explore our comprehensive range of products.",
+export async function generateMetadata(): Promise<Metadata> {
+    try {
+        const db = await getDB();
+        const seo = db.pages.products;
+        return {
+            title: seo?.metaTitle || "Our Products",
+            description: seo?.metaDescription || "Explore our premium range of products designed to elevate your business operations and efficiency.",
+        }
+    } catch {
+        return {
+            title: "Our Products",
+            description: "Explore our comprehensive range of products.",
+        }
+    }
 }
 
 export default async function ProductsPage() {

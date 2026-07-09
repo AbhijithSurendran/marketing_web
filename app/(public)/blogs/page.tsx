@@ -6,9 +6,20 @@ import PageContainer from "@/components/ui/PageContainer"
 import { getDB } from "@/lib/db"
 import { truncate, formatDate } from "@/lib/utils"
 
-export const metadata: Metadata = {
-    title: "Our Blog",
-    description: "Insights, news, and updates from our team.",
+export async function generateMetadata(): Promise<Metadata> {
+    try {
+        const db = await getDB();
+        const seo = db.pages.blogs;
+        return {
+            title: seo?.metaTitle || "Our Blog",
+            description: seo?.metaDescription || "Insights, industry news, and updates from our expert team.",
+        }
+    } catch {
+        return {
+            title: "Our Blog",
+            description: "Insights, news, and updates from our team.",
+        }
+    }
 }
 
 export default async function BlogsPage() {

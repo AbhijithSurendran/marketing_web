@@ -6,9 +6,20 @@ import ContactForm from "@/components/public/ContactForm"
 import FadeIn from "@/components/ui/FadeIn"
 import { getDB } from "@/lib/db"
 
-export const metadata: Metadata = {
-    title: "Contact Us",
-    description: "Get in touch with our team.",
+export async function generateMetadata(): Promise<Metadata> {
+    try {
+        const db = await getDB();
+        const seo = db.pages.contact;
+        return {
+            title: seo?.metaTitle || "Contact Us",
+            description: seo?.metaDescription || "Get in touch with our team.",
+        }
+    } catch {
+        return {
+            title: "Contact Us",
+            description: "Get in touch with our team.",
+        }
+    }
 }
 
 export default async function ContactPage() {
@@ -80,9 +91,22 @@ export default async function ContactPage() {
                         </div>
 
                         {/* Map or image placeholder */}
-                        <div className="mt-12 h-64 bg-gray-100 rounded-2xl overflow-hidden relative">
-                            <iframe width="100%" height="100%" frameBorder="0" scrolling="no" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=New%20York+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
-                        </div>
+                        {contactInfo.googleMapsEmbed ? (
+                            contactInfo.googleMapsEmbed.trim().startsWith("<iframe") ? (
+                                <div 
+                                    className="mt-12 h-64 rounded-2xl overflow-hidden relative w-full [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0" 
+                                    dangerouslySetInnerHTML={{ __html: contactInfo.googleMapsEmbed }} 
+                                />
+                            ) : (
+                                <div className="mt-12 h-64 bg-gray-100 rounded-2xl overflow-hidden relative">
+                                    <iframe width="100%" height="100%" frameBorder="0" scrolling="no" src={contactInfo.googleMapsEmbed}></iframe>
+                                </div>
+                            )
+                        ) : (
+                            <div className="mt-12 h-64 bg-gray-100 rounded-2xl overflow-hidden relative">
+                                <iframe width="100%" height="100%" frameBorder="0" scrolling="no" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=New%20York+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                            </div>
+                        )}
                     </FadeIn>
 
                     {/* Contact Form */}

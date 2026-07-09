@@ -11,7 +11,9 @@ import {
 const navItems = [
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
     { href: "/admin/hero-sliders", label: "Hero Sliders", icon: ImageIcon },
-    { href: "/admin/pages", label: "Pages", icon: FileText },
+    { href: "/admin/pages", label: "Pages SEO", icon: FileText },
+    { href: "/admin/about-content", label: "About Content", icon: FileText },
+    { href: "/admin/contact-content", label: "Contact Content", icon: FileText },
     { href: "/admin/services", label: "Services", icon: Wrench },
     { href: "/admin/products", label: "Products", icon: Package },
     { href: "/admin/gallery", label: "Gallery", icon: Images },

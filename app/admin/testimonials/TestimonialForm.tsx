@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { upsertTestimonial } from "@/app/actions/cms"
 import ImageUpload from "@/components/admin/ImageUpload"
-import type { Testimonial } from "@/lib/types/database"
+import type { Testimonial } from "@/lib/types"
 import { ArrowLeft, Loader2 } from "lucide-react"
 import Link from "next/link"
 

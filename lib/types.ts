@@ -53,23 +53,34 @@ export interface GalleryImage {
     createdAt: string;
 }
 
+export interface PageSEO {
+    metaTitle?: string;
+    metaDescription?: string;
+}
+
 export interface PagesContent {
     home: {
         heroTitle: string;
         heroSubtitle: string;
         heroCta: string;
-    };
+    } & PageSEO;
     about: {
         title: string;
         content: string;
         mission: string;
         vision: string;
-    };
+        bannerImage?: string;
+    } & PageSEO;
     contact: {
         email: string;
         phone: string;
         address: string;
-    };
+        googleMapsEmbed?: string;
+    } & PageSEO;
+    services?: PageSEO;
+    products?: PageSEO;
+    gallery?: PageSEO;
+    blogs?: PageSEO;
 }
 
 export interface User {
@@ -90,6 +101,17 @@ export interface Enquiry {
     created_at: string;
 }
 
+export interface Testimonial {
+    id: string;
+    name: string;
+    designation: string | null;
+    message: string;
+    photo_url: string | null;
+    sort_order: number;
+    is_active: boolean;
+    createdAt: string;
+}
+
 export interface DB {
     heroSliders: HeroSlider[];
     products: Product[];
@@ -99,4 +121,5 @@ export interface DB {
     pages: PagesContent;
     users: User[];
     enquiries: Enquiry[];
+    testimonials: Testimonial[];
 }

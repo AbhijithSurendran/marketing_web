@@ -43,7 +43,7 @@ export default function LoginPage() {
                 <div className="bg-white rounded-2xl shadow-2xl p-8">
                     <h2 className="text-xl font-heading font-semibold text-gray-900 mb-6">Admin Sign In</h2>
 
-                    {state.error && (
+                    {state?.error && (
                         <div className="mb-5 p-3.5 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm flex gap-3 items-start">
                             <AlertCircle size={20} className="flex-shrink-0 mt-0.5" />
                             {state.error}

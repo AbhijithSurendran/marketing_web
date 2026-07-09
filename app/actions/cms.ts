@@ -190,22 +190,39 @@ export async function deleteBlog(id: string) {
 }
 
 export async function upsertTestimonial(formData: FormData) {
-    const supabase = createAdminClient()
+    const db = await getDB()
     const id = formData.get("id") as string
+    
+    if (!db.testimonials) {
+        db.testimonials = []
+    }
+
     const payload = {
+        id: id || generateId(),
         name: formData.get("name") as string,
         designation: formData.get("designation") as string || null,
         message: formData.get("message") as string,
         photo_url: formData.get("photo_url") as string || null,
         sort_order: parseInt(formData.get("sort_order") as string) || 0,
         is_active: formData.get("is_active") === "true",
+        createdAt: new Date().toISOString(),
     }
 
     if (id) {
-        await supabase.from("testimonials").update(payload).eq("id", id)
+        const index = db.testimonials.findIndex(t => t.id === id)
+        if (index !== -1) {
+            payload.createdAt = db.testimonials[index].createdAt || payload.createdAt
+            db.testimonials[index] = payload
+        } else {
+            db.testimonials.push(payload)
+        }
     } else {
-        await supabase.from("testimonials").insert(payload)
+        db.testimonials.push(payload)
     }
+
+    db.testimonials.sort((a, b) => a.sort_order - b.sort_order)
+
+    await saveDB(db)
 
     revalidatePath("/")
     revalidatePath("/admin/testimonials")
@@ -213,8 +230,12 @@ export async function upsertTestimonial(formData: FormData) {
 }
 
 export async function deleteTestimonial(id: string) {
-    const supabase = createAdminClient()
-    await supabase.from("testimonials").delete().eq("id", id)
+    const db = await getDB()
+    if (db.testimonials) {
+        db.testimonials = db.testimonials.filter(t => t.id !== id)
+        await saveDB(db)
+    }
+    revalidatePath("/")
     revalidatePath("/admin/testimonials")
 }
 

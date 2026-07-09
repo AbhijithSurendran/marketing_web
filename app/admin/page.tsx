@@ -6,14 +6,13 @@ async function getStats() {
     try {
         const db = await getDB()
         return {
-            blogs: db.blogs.length,
-            products: db.products.length,
-            services: db.services.length,
-            gallery: db.gallery.length,
-            // These would normally be real counts from db if implemented fully
-            enquiries: 0,
-            unreadEnquiries: 0,
-            testimonials: 0
+            blogs: db.blogs?.length || 0,
+            products: db.products?.length || 0,
+            services: db.services?.length || 0,
+            gallery: db.gallery?.length || 0,
+            enquiries: db.enquiries?.length || 0,
+            unreadEnquiries: db.enquiries?.filter(e => !e.is_read).length || 0,
+            testimonials: db.testimonials?.length || 0
         }
     } catch {
         return { enquiries: 0, unreadEnquiries: 0, blogs: 0, products: 0, services: 0, gallery: 0, testimonials: 0 }

@@ -180,11 +180,13 @@
     "home": {
       "heroTitle": "Abhijith Surendran",
       "heroSubtitle": "We build beautiful, fast, and scalable applications tailored to your business needs.",
-      "heroCta": "Explore Our Work"
+      "heroCta": "Explore Our Work",
+      "metaTitle": "Welcomee",
+      "metaDescription": "Test "
     },
     "about": {
       "title": "Our Story",
-      "content": "WebMarket was founded with a simple goal: to create exceptional digital products. We believe in the power of good design and robust engineering.",
+      "content": "WebMarket was founded with a simple goal: to create exceptional digital products. We believe in the power of good design and robust engineering.qdqd",
       "mission": "To empower businesses through technology.",
       "vision": "A digital landscape where every application is a joy to use."
     },
@@ -214,6 +216,48 @@
       "message": "hdjhcghdwvjcvxjwvcxjcvwdx",
       "is_read": false,
       "created_at": "2026-03-05T14:39:19.959Z"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "9lm5dfyyd4mclu98ugeva",
+      "name": "Wark",
+      "designation": "Owner",
+      "message": "svscds",
+      "photo_url": "/uploads/Photo-1783575801533.jpeg",
+      "sort_order": 0,
+      "is_active": true,
+      "createdAt": "2026-07-09T05:43:24.184Z"
+    },
+    {
+      "id": "t1",
+      "name": "Sarah Johnson",
+      "designation": "CEO, TechStart Inc.",
+      "message": "WebMarket transformed our digital presence. Their team is professional, responsive, and delivered beyond our expectations. Our online sales increased 45% after launch.",
+      "photo_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
+      "sort_order": 1,
+      "is_active": true,
+      "createdAt": "2026-02-26T00:00:00.000Z"
+    },
+    {
+      "id": "t2",
+      "name": "Michael Chen",
+      "designation": "CTO, DataFlow Systems",
+      "message": "The cloud migration was seamless with zero downtime. Remarkable technical expertise and a pleasure to work with throughout the entire project.",
+      "photo_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
+      "sort_order": 2,
+      "is_active": true,
+      "createdAt": "2026-02-26T00:00:00.000Z"
+    },
+    {
+      "id": "t3",
+      "name": "Emily Rodriguez",
+      "designation": "Marketing Director, GrowthCo",
+      "message": "Our digital marketing strategy has been a game-changer. 3x increase in qualified leads and a significantly reduced cost per acquisition!",
+      "photo_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80",
+      "sort_order": 3,
+      "is_active": true,
+      "createdAt": "2026-02-26T00:00:00.000Z"
     }
   ]
 }

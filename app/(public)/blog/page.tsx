@@ -5,9 +5,25 @@ import { formatDate, ITEMS_PER_PAGE, truncate } from "@/lib/utils"
 import { getBlogs } from "@/app/actions/blogs"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import FadeIn from "@/components/ui/FadeIn"
+import { getDB } from "@/lib/db"
 
 interface Props { searchParams: { page?: string } }
-export const metadata: Metadata = { title: "Blog", description: "Insights, news, and updates from WebMarket." }
+
+export async function generateMetadata(): Promise<Metadata> {
+    try {
+        const db = await getDB();
+        const seo = db.pages.blogs;
+        return {
+            title: seo?.metaTitle || "Blog",
+            description: seo?.metaDescription || "Insights, news, and updates from WebMarket.",
+        }
+    } catch {
+        return {
+            title: "Blog",
+            description: "Insights, news, and updates from WebMarket.",
+        }
+    }
+}
 
 export default async function BlogPage({ searchParams }: Props) {
     const page = Math.max(1, parseInt(searchParams.page || "1"))

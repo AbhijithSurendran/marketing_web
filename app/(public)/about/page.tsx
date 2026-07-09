@@ -4,9 +4,20 @@ import PageContainer from "@/components/ui/PageContainer"
 import AboutSection from "@/components/public/AboutSection"
 import { getDB } from "@/lib/db"
 
-export const metadata: Metadata = {
-    title: "About Us",
-    description: "Learn more about our company mission, vision, and values",
+export async function generateMetadata(): Promise<Metadata> {
+    try {
+        const db = await getDB();
+        const seo = db.pages.about;
+        return {
+            title: seo?.metaTitle || "About Us",
+            description: seo?.metaDescription || "Learn more about our company mission, vision, and values",
+        }
+    } catch {
+        return {
+            title: "About Us",
+            description: "Learn more about our company mission, vision, and values",
+        }
+    }
 }
 
 export default async function AboutPage() {
@@ -22,7 +33,7 @@ export default async function AboutPage() {
 
             <AboutSection
                 content={about.content}
-                bannerImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"
+                bannerImage={about.bannerImage || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"}
             />
 
             <PageContainer className="bg-white">

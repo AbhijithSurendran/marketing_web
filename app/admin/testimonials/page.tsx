@@ -1,12 +1,15 @@
 import Link from "next/link"
 import Image from "next/image"
-import { createClient } from "@/lib/supabase/server"
+import { getDB } from "@/lib/db"
 import { deleteTestimonial } from "@/app/actions/cms"
 import { Plus, Pencil, Trash2 } from "lucide-react"
 
 export default async function TestimonialsAdminPage() {
-    let items: import("@/lib/types/database").Testimonial[] = []
-    try { const s = createClient(); const { data } = await s.from("testimonials").select("*").order("sort_order"); items = data || [] } catch { }
+    let items: import("@/lib/types").Testimonial[] = []
+    try {
+        const db = await getDB()
+        items = db.testimonials || []
+    } catch { }
 
     return (
         <div className="p-6 lg:p-8">

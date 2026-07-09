@@ -9,6 +9,8 @@ export default function HomePageForm({ data }: { data: PagesContent["home"] }) {
     const [heroTitle, setHeroTitle] = useState(data.heroTitle || "")
     const [heroSubtitle, setHeroSubtitle] = useState(data.heroSubtitle || "")
     const [heroCta, setHeroCta] = useState(data.heroCta || "")
+    const [metaTitle, setMetaTitle] = useState(data.metaTitle || "")
+    const [metaDescription, setMetaDescription] = useState(data.metaDescription || "")
     const [isPending, setIsPending] = useState(false)
     const [saved, setSaved] = useState(false)
 
@@ -21,6 +23,8 @@ export default function HomePageForm({ data }: { data: PagesContent["home"] }) {
         formData.append("heroTitle", heroTitle)
         formData.append("heroSubtitle", heroSubtitle)
         formData.append("heroCta", heroCta)
+        formData.append("metaTitle", metaTitle)
+        formData.append("metaDescription", metaDescription)
 
         const result = await updateHomeContent(formData)
         setIsPending(false)
@@ -35,7 +39,7 @@ export default function HomePageForm({ data }: { data: PagesContent["home"] }) {
         <form onSubmit={handleSubmit} className="space-y-6">
             {saved && (
                 <div className="flex items-center gap-2 p-4 bg-green-50 border border-green-200 rounded-xl text-green-700 text-sm font-medium">
-                    <CheckCircle size={18} /> Home page content saved successfully!
+                    <CheckCircle size={18} /> Home page content and SEO saved successfully!
                 </div>
             )}
 
@@ -52,6 +56,16 @@ export default function HomePageForm({ data }: { data: PagesContent["home"] }) {
                 <div>
                     <label className="label">Button Text (CTA)</label>
                     <input type="text" value={heroCta} onChange={(e) => setHeroCta(e.target.value)} required className="input-field" placeholder="E.g. Get Started" />
+                </div>
+
+                <h3 className="font-semibold text-gray-900 mb-2 border-b border-gray-100 pb-2 pt-4">SEO Settings</h3>
+                <div>
+                    <label className="label">SEO Title</label>
+                    <input type="text" value={metaTitle} onChange={(e) => setMetaTitle(e.target.value)} className="input-field" placeholder="SEO Title for Home page" />
+                </div>
+                <div>
+                    <label className="label">SEO Description</label>
+                    <textarea rows={3} value={metaDescription} onChange={(e) => setMetaDescription(e.target.value)} className="input-field resize-none" placeholder="Describe the home page in 150-160 characters..." />
                 </div>
             </div>
 

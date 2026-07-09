@@ -6,9 +6,20 @@ import PageContainer from "@/components/ui/PageContainer"
 import { getDB } from "@/lib/db"
 import { truncate } from "@/lib/utils"
 
-export const metadata: Metadata = {
-    title: "Our Services",
-    description: "Comprehensive solutions for your business needs.",
+export async function generateMetadata(): Promise<Metadata> {
+    try {
+        const db = await getDB();
+        const seo = db.pages.services;
+        return {
+            title: seo?.metaTitle || "Our Services",
+            description: seo?.metaDescription || "Comprehensive solutions tailored to help your business innovate, grow, and succeed in the digital era.",
+        }
+    } catch {
+        return {
+            title: "Our Services",
+            description: "Comprehensive solutions for your business needs.",
+        }
+    }
 }
 
 export default async function ServicesPage() {
