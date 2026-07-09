@@ -32,11 +32,11 @@ export default function GalleryClientPage({ items }: GalleryClientProps) {
                                 key={item.id}
                                 onClick={() => setLightboxIndex(index)}
                                 className="relative h-64 overflow-hidden rounded-xl group cursor-pointer"
-                                aria-label={item.alt || `Gallery image ${index + 1}`}
+                                aria-label={item.caption || item.alt || `Gallery image ${index + 1}`}
                             >
                                 <Image
                                     src={item.url}
-                                    alt={item.alt || `Gallery ${index + 1}`}
+                                    alt={item.caption || item.alt || `Gallery ${index + 1}`}
                                     fill
                                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -46,9 +46,9 @@ export default function GalleryClientPage({ items }: GalleryClientProps) {
                                         View Image
                                     </span>
                                 </div>
-                                {item.alt && (
+                                {(item.caption || item.alt) && (
                                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                                        <p className="text-white text-sm font-medium line-clamp-2">{item.alt}</p>
+                                        <p className="text-white text-sm font-medium line-clamp-2">{item.caption || item.alt}</p>
                                     </div>
                                 )}
                             </button>
@@ -102,17 +102,17 @@ export default function GalleryClientPage({ items }: GalleryClientProps) {
                     >
                         <Image
                             src={items[lightboxIndex].url}
-                            alt={items[lightboxIndex].alt || "Gallery Image"}
+                            alt={items[lightboxIndex].caption || items[lightboxIndex].alt || "Gallery Image"}
                             fill
                             className="object-contain"
                             sizes="100vw"
                             priority
                         />
                     </div>
-                    {items[lightboxIndex].alt && (
+                    {(items[lightboxIndex].caption || items[lightboxIndex].alt) && (
                         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 max-w-2xl w-full px-4 text-center">
                             <p className="text-white text-base bg-black/60 backdrop-blur-md px-6 py-3 rounded-2xl shadow-2xl inline-block border border-white/10">
-                                {items[lightboxIndex].alt}
+                                {items[lightboxIndex].caption || items[lightboxIndex].alt}
                             </p>
                         </div>
                     )}

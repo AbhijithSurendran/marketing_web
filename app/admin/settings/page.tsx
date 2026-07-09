@@ -6,7 +6,7 @@ export default async function SettingsPage() {
     try {
         const supabase = createClient()
         const { data } = await supabase.from("site_settings").select("key, value")
-        if (data) settings = Object.fromEntries(data.map((s) => [s.key, s.value ?? ""]))
+        if (data) settings = Object.fromEntries((data as any).map((s: any) => [s.key, s.value ?? ""]))
     } catch { }
 
     return (

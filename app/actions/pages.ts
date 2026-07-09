@@ -92,8 +92,8 @@ export async function updatePageSEO(
             db.pages[pageKey] = {} as any;
         }
 
-        db.pages[pageKey].metaTitle = formData.get("metaTitle") as string || undefined;
-        db.pages[pageKey].metaDescription = formData.get("metaDescription") as string || undefined;
+        db.pages[pageKey]!.metaTitle = formData.get("metaTitle") as string || undefined;
+        db.pages[pageKey]!.metaDescription = formData.get("metaDescription") as string || undefined;
 
         await saveDB(db);
         

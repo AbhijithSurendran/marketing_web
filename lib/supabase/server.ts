@@ -12,10 +12,9 @@ export function createClient() {
                 getAll() {
                     return cookieStore.getAll()
                 },
-                setAll(cookiesToSet) {
+                setAll(cookiesToSet: any[]) {
                     try {
                         cookiesToSet.forEach(({ name, value, options }) => {
-                            // @ts-expect-error – cookies() is read-only in Server Components, ignore in RSC context
                             cookieStore.set(name, value, options)
                         })
                     } catch {

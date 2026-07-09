@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next"
-import { createClient } from "@/lib/supabase/server"
+import { getDB } from "@/lib/db"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://webmarket.vercel.app"
@@ -15,31 +15,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ]
 
     try {
-        const supabase = createClient()
+        const db = await getDB()
 
-        const [{ data: services }, { data: products }, { data: blogs }] = await Promise.all([
-            supabase.from("services").select("slug, updated_at").eq("is_published", true),
-            supabase.from("products").select("slug, updated_at").eq("is_published", true),
-            supabase.from("blogs").select("slug, updated_at, published_at").eq("is_published", true),
-        ])
-
-        const serviceRoutes: MetadataRoute.Sitemap = (services || []).map((s) => ({
+        const serviceRoutes: MetadataRoute.Sitemap = (db.services || []).map((s) => ({
             url: `${baseUrl}/services/${s.slug}`,
-            lastModified: new Date(s.updated_at),
+            lastModified: new Date(s.updatedAt || s.createdAt || new Date()),
             changeFrequency: "monthly",
             priority: 0.7,
         }))
 
-        const productRoutes: MetadataRoute.Sitemap = (products || []).map((p) => ({
+        const productRoutes: MetadataRoute.Sitemap = (db.products || []).map((p) => ({
             url: `${baseUrl}/products/${p.slug}`,
-            lastModified: new Date(p.updated_at),
+            lastModified: new Date(p.updatedAt || p.createdAt || new Date()),
             changeFrequency: "monthly",
             priority: 0.7,
         }))
 
-        const blogRoutes: MetadataRoute.Sitemap = (blogs || []).map((b) => ({
+        const blogRoutes: MetadataRoute.Sitemap = (db.blogs || []).map((b) => ({
             url: `${baseUrl}/blog/${b.slug}`,
-            lastModified: new Date(b.updated_at),
+            lastModified: new Date(b.updatedAt || b.createdAt || new Date()),
             changeFrequency: "weekly",
             priority: 0.6,
         }))

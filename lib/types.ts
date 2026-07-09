@@ -49,7 +49,8 @@ export interface Blog {
 export interface GalleryImage {
     id: string;
     url: string;
-    alt: string;
+    alt?: string;
+    caption?: string | null;
     createdAt: string;
 }
 

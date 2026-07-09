@@ -7,7 +7,7 @@ import { ArrowLeft, Loader2 } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
-export default function GalleryItemForm() {
+export default function GalleryItemForm({ item }: { item?: any }) {
     const router = useRouter()
     const [imageUrl, setImageUrl] = useState("")
     const [caption, setCaption] = useState("")

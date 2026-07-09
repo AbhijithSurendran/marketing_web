@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { Quote } from "lucide-react"
-import type { Testimonial } from "@/lib/types/database"
+import type { Testimonial } from "@/lib/types"
 
 interface TestimonialsSectionProps {
     testimonials: Testimonial[]
