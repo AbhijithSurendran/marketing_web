@@ -4,6 +4,10 @@ import { useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import type { HeroSlider } from "@/lib/types"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+import "swiper/css/effect-fade"
 
 interface HeroSliderProps {
     slides: HeroSlider[]
@@ -18,11 +22,6 @@ export default function HeroSliderSection({ slides }: HeroSliderProps) {
         const initSwiper = async () => {
             const { Swiper } = await import("swiper")
             const { Autoplay, Navigation, Pagination, EffectFade } = await import("swiper/modules")
-
-            await import("swiper/css")
-            await import("swiper/css/navigation")
-            await import("swiper/css/pagination")
-            await import("swiper/css/effect-fade")
 
             swiperInstance = new Swiper(".hero-swiper", {
                 modules: [Autoplay, Navigation, Pagination, EffectFade],
